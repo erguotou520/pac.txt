@@ -2,10 +2,21 @@ branches:
   only:
     - master
 
+before_install:
+  - git config --global push.default matching
+  - git config --global user.name "erguotou"
+  - git config --global user.email "erguotou525@gmail.com"
+
 script:
   - sh ./pac_get.sh
 
 after_success:
+  - mkdir -p /tmp/pac
+  - cp pac.txt /tmp/pac
+  - cd /tmp/pac
+  - git init
+  - git add ./ -A
+  - git commit -m "Auto build"
   - git push -u https://$GITHUB_TOKEN@github.com/erguotou520/pac.txt.git HEAD:pac --force
 
 
