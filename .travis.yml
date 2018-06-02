@@ -3,7 +3,7 @@ branches:
     - master
 
 script:
-  - sh ./pac-get.sh
+  - sh ./pac_get.sh
 
 after_success:
   - git push -u https://$GITHUB_TOKEN@github.com/erguotou520/pac.txt.git HEAD:pac --force
