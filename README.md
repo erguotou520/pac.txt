@@ -1,1 +1,1 @@
-copy from https://doub.io/ss-jc59/
+copy from https://github.com/ToyoDAdoubi/doubi/blob/master/pac_get.sh
