@@ -8,9 +8,11 @@ before_install:
   - git config --global user.email "erguotou525@gmail.com"
 
 script:
+  - cat ./pac_get.sh
   - sh ./pac_get.sh
 
 after_success:
+  - rm -rf /tmp/pac
   - mkdir -p /tmp/pac
   - cp pac.txt /tmp/pac
   - cd /tmp/pac
