@@ -313,7 +313,7 @@ extend(RegExpFilter, ActiveFilter, {
 		{
 			return prop;
 		}
-		var source = this.regexpSource.replace(/\*+/g, "*").replace(/\^\|$/, "^").replace(/\W/g, "\\$&").replace(/\\\*/g, ".*").replace(/\\\^/g, "(?:[\\x00-\\x24\\x26-\\x2C\\x2F\\x3A-\\x40\\x5B-\\x5E\\x60\\x7B-\\x7F]|$)").replace(/^\\\|\\\|/, "^[\\w\\-]+:\\/+(?!\\/)(?:[^\\/]+\\.)?").replace(/^\\\|/, "^").replace(/\\\|$/, "$").replace(/^(\.\*)/, "").replace(/(\.\*)$/, "");
+		var source = this.regexpSource.replace(/\*+/g, "*").replace(/\^\|$/, "^").replace(/\W/g, "\\\\$&").replace(/\\\\\*/g, ".*").replace(/\\\\\^/g, "(?:[\\\\x00-\\\\x24\\\\x26-\\\\x2C\\\\x2F\\\\x3A-\\\\x40\\\\x5B-\\\\x5E\\\\x60\\\\x7B-\\\\x7F]|$)").replace(/^\\\\\|\\\\\|/, "^[\\\\w\\\\-]+:\\\\/+(?!\\\\/)(?:[^\\\\/]+\\\\.)?").replace(/^\\\\\|/, "^").replace(/\\\\\|$/, "$").replace(/^(\\.\\*)/, "").replace(/(\\.\\*)$/, "");
 		var regexp = new RegExp(source, this.matchCase ? "" : "i");
 		this.regexp = regexp;
 		return regexp;
@@ -865,8 +865,9 @@ urlsafe_base64_d(){
 	echo -e "${date}"
 }
 PAC_TEXT=$(curl -m 10 -s "${PAC_URL}")
-PAC_BASE64=$(urlsafe_base64_d "${PAC_TEXT}"|grep -v "!"|sed '1d;s/\\/\\\\/g;/^\s*$/d;s/^/	"&/g;s/$/&",/g;$s/.$//')
+# echo $PAC_TEXT
+PAC_BASE64=$(urlsafe_base64_d "${PAC_TEXT}"|grep -v "!"|sed '1d;s/\\/\\\\/g;/^\s*$/d;s/^/	"&/g;s/$/&",/g;$s/.$//'|sed 's/\\/\\\\/g;')
 PAC_NUM=$(echo "${PAC_BASE64}"|wc -l)
 echo "${PAC_TAME}${PAC_prefix}${PAC_BASE64}${PAC_suffix}" > "${Output_URL}"
-sed -i 's/$/\r/' "${Output_URL}"
+sed -i 's/$/\r/;' "${Output_URL}"
 echo "${PAC_NUM}"
